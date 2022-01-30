@@ -4,11 +4,15 @@
   "description": "Detect and replace links to <a href=\"link\"></a> in chosen HTML component",
   "main": "index.js",
   "scripts": {
-    "build-library": "vue-cli-service build --target lib --name dolinks ./install.ts"
+    "build": "tsc",
+    "build-library": "vue-cli-service build --target lib --name dolinks ./src/install.ts"
   },
   "author": "Vlad Hutsal",
   "license": "ISC",
   "dependencies": {
     "@vue/cli-service-global": "^4.5.15"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.5"
   }
 }
