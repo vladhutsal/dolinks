@@ -39,7 +39,7 @@ export default function updateHTMLWithLinks(el: HTMLElement, bind: DirectiveBind
     const nSplitedPhrase = word.split(/\n/);
     let nEnd = nSplitedPhrase.length > 1 ? nSplitedPhrase.length : 0;
     
-    let nSplitedPhraseLinked: string;
+    let nSplitedPhraseLinked = '';
     for (const nSplitedTerm of nSplitedPhrase) {
       nEnd -= 1;
       const isTermALink = nSplitedTerm.match(validUrlRegExp);
