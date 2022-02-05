@@ -9,8 +9,8 @@ const defaultUrlRegExp = new RegExp(['^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][
 
 export type Ttarget = '_self' | '_blank' | '_parent' | '_top';
 export interface IOptions {
-  urlRegEx: RegExp;
-  target: Ttarget;
+  urlRegEx?: RegExp;
+  target?: Ttarget;
 };
 
 
@@ -30,11 +30,10 @@ function updateLinkedPhrase(nEnd: number, linkedPhrase: string, newText: string)
 
 
 export default function updateHTMLWithLinks(el: HTMLElement, bind: DirectiveBinding, options: IOptions) {
-  const { validUrlRegExp, aTarget } = defineOptions(options);
-
+  const opts = options ? options : {};
+  const { validUrlRegExp, aTarget } = defineOptions(opts);
   const text = bind.value;
   const spaceSplitedText = text.split(' ');
-
   const linkedTextArr = spaceSplitedText.map((word: string) => {
     const nSplitedPhrase = word.split(/\n/);
     let nEnd = nSplitedPhrase.length > 1 ? nSplitedPhrase.length : 0;
