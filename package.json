@@ -12,7 +12,7 @@
     "vue-directive",
     "linkify"
   ],
-  "author": "Vlad Hutsal",
+  "author": "vladhutsal",
   "license": "MIT",
   "devDependencies": {
     "typescript": "^4.5.5"
