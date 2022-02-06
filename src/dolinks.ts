@@ -3,21 +3,19 @@ import { DirectiveBinding } from 'vue/types/options';
 
 import { IOptions } from './helpers';
 import { validHTMLtagRegExp } from './helpers';
-import { sanitizeHTMLTags, updateLinkedPhrase, defineOptions } from './helpers';
+import { sanitizeHTMLTags, updateLinkedPhrase, defineOptions, handleConsoleWarnings} from './helpers';
 
 
-function updateHTMLWithLinks(el: HTMLElement, bind: DirectiveBinding, vnode: VNode, options: IOptions) {
-  const opts = options ? options : {};
-  const { validUrlRegExp, aTarget } = defineOptions(opts);
-  const text = bind.value ? bind.value : undefined;
-  
-  if (!text) {
-    console.error(
-      `v-dolinks: seems like v-dolinks directive argument is empty (inside of <${vnode.tag}> tag).\n`,
-      '          Pass text directly to v-dolniks as argument: v-dolinks="\'Your text here\'"');
+function updateHTMLWithLinks(el: HTMLElement, bind: DirectiveBinding, vnode: VNode, options: IOptions = {}) {
+  const { urlRegEx, target, disableWarnings } = defineOptions(options);
+  const attrText = bind.value ? bind.value : undefined;
+
+  const error = handleConsoleWarnings(vnode, attrText, disableWarnings);
+  if (error) {
+    return;
   }
 
-  const spaceSplitedText = text!.split(' ');
+  const spaceSplitedText = attrText!.split(' ');
   const linkedTextArr = spaceSplitedText.map((word: string) => {
     const nSplitedPhrase = word.split(/\n/);
     let nEnd = nSplitedPhrase.length > 1 ? nSplitedPhrase.length : 0;
@@ -26,7 +24,7 @@ function updateHTMLWithLinks(el: HTMLElement, bind: DirectiveBinding, vnode: VNo
     for (let nSplitedTerm of nSplitedPhrase) {
       nEnd -= 1;
 
-      const isTermLink = nSplitedTerm.match(validUrlRegExp);
+      const isTermLink = nSplitedTerm.match(urlRegEx);
       const isTermHTMLTag = nSplitedTerm.match(validHTMLtagRegExp);
       
       if (isTermHTMLTag) {
@@ -34,7 +32,7 @@ function updateHTMLWithLinks(el: HTMLElement, bind: DirectiveBinding, vnode: VNo
       }
 
       if (isTermLink) {
-        const linkEl = `<a href="${nSplitedTerm}" target="${aTarget}">${nSplitedTerm}</a>`;
+        const linkEl = `<a href="${nSplitedTerm}" target="${target}">${nSplitedTerm}</a>`;
         nSplitedPhraseLinked = updateLinkedPhrase(nEnd, nSplitedPhraseLinked, linkEl);
         continue;
       }
