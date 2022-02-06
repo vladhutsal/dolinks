@@ -28,16 +28,18 @@ Vue.use(dolinks, options)
 ```
 
 ## How to use
-Use ```v-dolinks``` directive with any HTML tag, which text need to be linked:
+Pass text which you want to linkify as ```v-dolinks``` directive argument:</br>
+> **Note that text inside of your tag (\<p> in current example) is ignored.**
 #### Input:
 ```html
-<p v-dolinks>Some text description in <p> tag and some https://achievki.io link</p>
+<p v-dolinks="'Some text description in <p>inside_text</p> tag and some https://achievki.io link'">My tag text</p>
 ```
 #### Output: 
 ```html
 <p>
-  Some text description in <p> tag and some
-  <a href="https://achievki.io" target="_blank">https://achievki.io link</a>
+  Some text description in <p>inside_text</p> tag and some
+  <a href="https://achievki.io" target="_blank">https://achievki.io</a>
+ link
 </p>
 ```
 
