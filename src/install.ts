@@ -4,8 +4,8 @@ import updateHTMLWithLinks, { IOptions } from './dolinks';
 const dolinks = {
   install(Vue: typeof _Vue, options: IOptions) {
     Vue.directive("dolinks", {
-      inserted: (el, bind) => updateHTMLWithLinks(el, bind, options),
-      componentUpdated: (el, bind) => updateHTMLWithLinks(el, bind, options),
+      inserted: (el, bind, vnode) => updateHTMLWithLinks(el, bind, vnode, options),
+      componentUpdated: (el, bind, vnode) => updateHTMLWithLinks(el, bind, vnode, options),
     });
   }
 };

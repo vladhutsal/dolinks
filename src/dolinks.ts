@@ -1,3 +1,4 @@
+import { VNode } from 'vue';
 import { DirectiveBinding } from 'vue/types/options';
 
 const defaultTarget = '_blank';
@@ -28,12 +29,19 @@ function updateLinkedPhrase(nEnd: number, linkedPhrase: string, newText: string)
   return linkedPhrase + newText;
 }
 
-
-export default function updateHTMLWithLinks(el: HTMLElement, bind: DirectiveBinding, options: IOptions) {
+function updateHTMLWithLinks(el: HTMLElement, bind: DirectiveBinding, vnode: VNode, options: IOptions) {
+  
   const opts = options ? options : {};
   const { validUrlRegExp, aTarget } = defineOptions(opts);
-  const text = bind.value;
-  const spaceSplitedText = text.split(' ');
+  const text = vnode.children ? vnode.children[0].text : undefined;
+
+  if (!text) {
+    console.error(
+      `v-dolinks directive couldn't find text inside of <${vnode.tag}> tag.\n`,
+      "v-dolinks should be used directly on tags, which contains text");
+  }
+
+  const spaceSplitedText = text!.split(' ');
   const linkedTextArr = spaceSplitedText.map((word: string) => {
     const nSplitedPhrase = word.split(/\n/);
     let nEnd = nSplitedPhrase.length > 1 ? nSplitedPhrase.length : 0;
@@ -54,3 +62,5 @@ export default function updateHTMLWithLinks(el: HTMLElement, bind: DirectiveBind
   });
   el.innerHTML = linkedTextArr.join(' ');
 }
+
+export default updateHTMLWithLinks;
