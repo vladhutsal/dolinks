@@ -10,7 +10,10 @@
   "keywords": [
     "vue",
     "vue-directive",
-    "linkify"
+    "linkify",
+    "link",
+    "url",
+    "autolink"
   ],
   "author": "vladhutsal",
   "license": "MIT",
