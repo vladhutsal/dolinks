@@ -1,6 +1,11 @@
 # dolinks
 > Vue directive to make links clickable in chosen HTML component, preserving newlines symbols of your text.
 
+  - [Instalation](#installation)
+  - [How to use](#how-to-use)
+  - [Options](#options) 
+
+
 ## Installation
 ```$ npm i dolinks```
 
