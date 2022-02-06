@@ -1,6 +1,6 @@
 {
   "name": "dolinks",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Make links clickable in chosen HTML component preserving newlines symbols of your text",
   "main": "lib/install.js",
   "types": "lib/install.d.ts",
