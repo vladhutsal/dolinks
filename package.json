@@ -1,9 +1,5 @@
 {
-  "name": "@vladhutsal/dolinks",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
-  "repository": "git://github.com/vladhutsal/dolinks.git",
+  "name": "dolinks",
   "version": "1.0.6",
   "description": "Make links clickable in chosen HTML component, preserving newlines symbols of your text",
   "main": "lib/install.js",
