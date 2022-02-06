@@ -7,7 +7,7 @@
 ### Import
 ```javascript
 // import dolinks in your project root
-import dolinks from 'dolinks';
+import dolinks from 'dolinks'
 
 // pass it to Vue.use() method
 Vue.use(dolinks);
