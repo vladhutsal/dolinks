@@ -1,5 +1,6 @@
 import _Vue from 'vue';
-import updateHTMLWithLinks, { IOptions } from './dolinks';
+import updateHTMLWithLinks from './dolinks';
+import { IOptions } from './helpers';
 
 const dolinks = {
   install(Vue: typeof _Vue, options: IOptions) {
