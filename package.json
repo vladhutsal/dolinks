@@ -1,5 +1,9 @@
 {
-  "name": "dolinks",
+  "name": "@vladhutsal/dolinks",
+  "publishConfig": {
+      "registry": "https://npm.pkg.github.com/"
+    },
+  "repository": "git://github.com/vladhutsal/dolinks.git",
   "version": "1.0.5",
   "description": "Make links clickable in chosen HTML component, preserving newlines symbols of your text",
   "main": "lib/install.js",
@@ -14,9 +18,6 @@
   ],
   "author": "Vlad Hutsal",
   "license": "MIT",
-  "dependencies": {
-    "@vue/cli-service-global": "^4.5.15"
-  },
   "devDependencies": {
     "typescript": "^4.5.5"
   }
