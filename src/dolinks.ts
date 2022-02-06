@@ -1,44 +1,20 @@
 import { VNode } from 'vue';
 import { DirectiveBinding } from 'vue/types/options';
 
-const defaultTarget = '_blank';
-const defaultUrlRegExp = new RegExp(['^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.',
-                                     '[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.',
-                                     '[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.',
-                                     '[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$'].join(''));
+import { IOptions } from './helpers';
+import { validHTMLtagRegExp } from './helpers';
+import { sanitizeHTMLTags, updateLinkedPhrase, defineOptions } from './helpers';
 
-
-export type Ttarget = '_self' | '_blank' | '_parent' | '_top';
-export interface IOptions {
-  urlRegEx?: RegExp;
-  target?: Ttarget;
-};
-
-
-function defineOptions(options: IOptions) {
-  const validUrlRegExp = options.urlRegEx ? options.urlRegEx : defaultUrlRegExp;
-  const aTarget = options.target ? options.target : defaultTarget;
-  return { validUrlRegExp, aTarget };
-};
-
-
-function updateLinkedPhrase(nEnd: number, linkedPhrase: string, newText: string) {
-  if (nEnd) {
-    return linkedPhrase + newText + '\n';
-  }
-  return linkedPhrase + newText;
-}
 
 function updateHTMLWithLinks(el: HTMLElement, bind: DirectiveBinding, vnode: VNode, options: IOptions) {
-  
   const opts = options ? options : {};
   const { validUrlRegExp, aTarget } = defineOptions(opts);
-  const text = vnode.children ? vnode.children[0].text : undefined;
-
+  const text = bind.value ? bind.value : undefined;
+  
   if (!text) {
     console.error(
-      `v-dolinks directive couldn't find text inside of <${vnode.tag}> tag.\n`,
-      "v-dolinks should be used directly on tags, which contains text");
+      `v-dolinks: seems like v-dolinks directive argument is empty (inside of <${vnode.tag}> tag).\n`,
+      '          Pass text directly to v-dolniks as argument: v-dolinks="\'Your text here\'"');
   }
 
   const spaceSplitedText = text!.split(' ');
@@ -47,10 +23,17 @@ function updateHTMLWithLinks(el: HTMLElement, bind: DirectiveBinding, vnode: VNo
     let nEnd = nSplitedPhrase.length > 1 ? nSplitedPhrase.length : 0;
     
     let nSplitedPhraseLinked = '';
-    for (const nSplitedTerm of nSplitedPhrase) {
+    for (let nSplitedTerm of nSplitedPhrase) {
       nEnd -= 1;
-      const isTermALink = nSplitedTerm.match(validUrlRegExp);
-      if (isTermALink) {
+
+      const isTermLink = nSplitedTerm.match(validUrlRegExp);
+      const isTermHTMLTag = nSplitedTerm.match(validHTMLtagRegExp);
+      
+      if (isTermHTMLTag) {
+        nSplitedTerm = sanitizeHTMLTags(nSplitedTerm);
+      }
+
+      if (isTermLink) {
         const linkEl = `<a href="${nSplitedTerm}" target="${aTarget}">${nSplitedTerm}</a>`;
         nSplitedPhraseLinked = updateLinkedPhrase(nEnd, nSplitedPhraseLinked, linkEl);
         continue;
