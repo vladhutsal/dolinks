@@ -20,11 +20,15 @@ Vue.use(dolinks);
 
 ### Additional options object:
 ```javascript
-const options = {
-  urlRegEx: myRegExpVariable,
-  target: myTargetAtributeValue,
+interface IOptions {
+  urlRegEx?: RegExp,
+  target?: '_self' | '_blank' | '_parent' | '_top',
+  disableWarnings?: boolean,
 }
-Vue.use(dolinks, options)
+```
+Pass options object as a Vue.use() parameter:
+```javascript
+Vue.use(dolinks, options);
 ```
 
 ## How to use
@@ -59,6 +63,9 @@ The value for **target** atribute of an **&lt;a>** tag. Should be a valid value 
   - **_blank (default)**
   - _parent
   - _top
+
+### disableWarnings
+If true - disables all dolinks warnings and errors. **Default - false**.
 
 ## License
 MIT © [vladhutsal](https://github.com/vladhutsal)
