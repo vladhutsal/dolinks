@@ -1,8 +1,8 @@
 # dolinks
-Vue directive to make links clickable in chosen HTML component, preserving newlines symbols of your text.
+> Vue directive to make links clickable in chosen HTML component, preserving newlines symbols of your text.
 
 ## Installation
-```npm i dolinks```
+```$ npm i dolinks```
 
 ### Import
 ```javascript
@@ -52,3 +52,6 @@ The value for **target** atribute of an **&lt;a>** tag. Should be a valid value 
   - **_blank (default)**
   - _parent
   - _top
+
+## License
+MIT © [vladhutsal](https://github.com/vladhutsal)

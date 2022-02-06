@@ -1,14 +1,13 @@
 {
   "name": "dolinks",
-  "version": "1.0.0",
-  "description": "Detect and replace links to <a href=\"link\"></a> in chosen HTML component",
+  "version": "1.0.1",
+  "description": "Make links clickable in chosen HTML component, preserving newlines symbols of your text",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "build-library": "vue-cli-service build --target lib --name dolinks ./src/install.ts"
+    "build": "tsc"
   },
   "author": "Vlad Hutsal",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@vue/cli-service-global": "^4.5.15"
   },
