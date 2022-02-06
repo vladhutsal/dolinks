@@ -2,10 +2,16 @@
   "name": "dolinks",
   "version": "1.0.3",
   "description": "Make links clickable in chosen HTML component, preserving newlines symbols of your text",
-  "main": "index.js",
+  "main": "lib/install.js",
+  "types": "lib/dolinks.d.ts",
   "scripts": {
     "build": "tsc"
   },
+  "keywords": [
+    "vue",
+    "vue-directive",
+    "linkify"
+  ],
   "author": "Vlad Hutsal",
   "license": "MIT",
   "dependencies": {
