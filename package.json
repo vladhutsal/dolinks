@@ -3,7 +3,7 @@
   "version": "1.0.4",
   "description": "Make links clickable in chosen HTML component, preserving newlines symbols of your text",
   "main": "lib/install.js",
-  "types": "lib/dolinks.d.ts",
+  "types": "lib/install.d.ts",
   "scripts": {
     "build": "tsc"
   },
