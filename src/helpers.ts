@@ -37,7 +37,7 @@ export function defineOptions(options: IOptions): IDefaultOptions {
 
 
 export function updateLinkedPhrase(nEnd: number, linkedPhrase: string, newText: string): string {
-  if (nEnd) {
+  if (nEnd > 0) {
     return linkedPhrase + newText + '\n';
   }
   return linkedPhrase + newText;
