@@ -4,7 +4,7 @@
   - [Instalation](#installation)
   - [How to use](#how-to-use)
   - [Options](#options)
-  - [Changelog] (https://github.com/vladhutsal/dolinks/blob/main/CHANGELOG.md)
+  - [Changelog](https://github.com/vladhutsal/dolinks/blob/main/CHANGELOG.md)
 
 
 ## Installation
