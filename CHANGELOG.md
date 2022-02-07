@@ -1,3 +1,6 @@
+### 1.1.21
+  - Updated README.md
+
 ### 1.1.2
   - Add CHANGELOG.md;
   - RegEx worked wrong due to lack of escaped characters - now fixed;
