@@ -21,10 +21,15 @@ export const validHTMLtagRegExp = /<(“[^”]*”|'[^’]*’|[^'”>])*>/
 
 const defaultWarnings = false;
 const defaultTarget = '_blank';
-const defaultUrlRegExp = new RegExp(['^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.',
-                                     '[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.',
-                                     '[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.',
-                                     '[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$'].join(''));
+
+
+const defaultUrlRegExp = new RegExp([
+  '^(https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.',
+  '[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.',
+  '[^\\s]{2,}|https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.',
+  '[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})$'
+  ].join('')
+);
 
 
 // HELPERS
