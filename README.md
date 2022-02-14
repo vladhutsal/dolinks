@@ -7,6 +7,7 @@
     - [Preserve your \n symbols](#preserve-your-n-symbols)
     - [Sanitizes all other HTML tags](#sanitizes-all-other-html-tags)
   - [Options](#options)
+  - [Known issues](#known-issues)
   - [Changelog](https://github.com/vladhutsal/dolinks/blob/main/CHANGELOG.md)
 
 
@@ -108,6 +109,9 @@ The value for **target** atribute of an **&lt;a>** tag. Should be a valid value 
 
 ### disableWarnings
 If true - disables all dolinks warnings and errors. **Default - false**.
+
+## Known issues
+- If text inside your tag with v-dolinks directive needs to be reactive, you should re-render component on each text update (e.g. use <p v-dolinks>:key="yourText">{{ yourText }}</p>). `update` and `componentUpdated` Vue directive hooks not working correctly with 1.2.0 and disabled for 1.2.1.
 
 ## License
 MIT © [vladhutsal](https://github.com/vladhutsal)

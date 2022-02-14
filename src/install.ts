@@ -1,12 +1,12 @@
 import _Vue from 'vue';
-import updateHTMLWithLinks from './dolinks';
+import insertHTMLWithLinks from './dolinks';
 import { IUserOptions } from './intrefaces';
 
 const dolinks = {
   install(Vue: typeof _Vue, options: IUserOptions) {
     Vue.directive("dolinks", {
-      inserted: (el, bind, vnode) => updateHTMLWithLinks(el, bind, vnode, options),
-      componentUpdated: (el, bind, vnode) => updateHTMLWithLinks(el, bind, vnode, options),
+      inserted: (el, bind, vnode) => insertHTMLWithLinks(el, bind, vnode, options),
+      // componentUpdated: (el, bind, vnode) => updateHTMLWithLinks(el, bind, vnode, options),
     });
   }
 };

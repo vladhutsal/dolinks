@@ -6,7 +6,7 @@ import { compileLinkTag, getInnerText, getTextExistence } from './helpers';
 import { sanitizeHTMLTags, defineOptions, handleWarningsAndErrors} from './helpers';
 
 
-function updateHTMLWithLinks(
+function insertHTMLWithLinks(
   el: HTMLElement, bind: DirectiveBinding, vnode: VNode, userOptions: IUserOptions = {}
 ) {
   const argText = bind.value ? bind.value : '';
@@ -50,4 +50,4 @@ function updateHTMLWithLinks(
   el.innerHTML = resultText.length > 0 ? resultText : innerSanitizedText;
 }
 
-export default updateHTMLWithLinks;
+export default insertHTMLWithLinks;
