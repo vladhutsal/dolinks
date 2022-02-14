@@ -1,5 +1,5 @@
 ### 1.2.0
-  - DEPRECATED: passing text as v-dolinks directive arg is deprecated. Pass text to your tage inner text directly. Both is working for compability, but will be removed soon:
+  - DEPRECATED: passing text as v-dolinks directive arg is deprecated. Pass text to your tag inner text directly. Both are working for compatibility, but arg passing will be removed soon:
     - wrong: <p v-dolinks="'your text'"></p>
     - right: <p v-dolinks>{{ yourTextValue }}</p>
   - Changed links detecting method - increased parsing speed x10 ops/sec (measured by performance.now(), compared to 1.1.21);
