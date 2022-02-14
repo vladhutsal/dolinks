@@ -1,3 +1,6 @@
+### 1.2.1
+  - Removed `componentUpdated` hook support. Component should be re-rendered manualy, using e.g. Vue `:key=""` attribute.
+
 ### 1.2.0
   - DEPRECATED: passing text as v-dolinks directive arg is deprecated. Pass text to your tag inner text directly. Both are working for compatibility, but arg passing will be removed soon:
     - wrong: <p v-dolinks="'your text'"></p>
