@@ -1,14 +1,19 @@
 # dolinks
+> ### Not tested with Vue3
 > Vue directive to make links clickable in chosen HTML component, preserving newlines symbols of your text.
 
   - [Instalation](#installation)
-  - [How to use](#how-to-use)
+  - [Usage examples](#usage-examples)
+    - [Preserve your \n symbols](#preserve-your-n-symbols)
+    - [Sanitizes all other HTML tags](#sanitizes-all-other-html-tags)
   - [Options](#options)
   - [Changelog](https://github.com/vladhutsal/dolinks/blob/main/CHANGELOG.md)
 
 
 ## Installation
-```$ npm i dolinks```
+```
+$ npm i dolinks
+```
 
 ### Import
 ```javascript
@@ -32,19 +37,55 @@ Pass options object as a Vue.use() parameter:
 Vue.use(dolinks, options);
 ```
 
-## How to use
-Pass text which you want to linkify as ```v-dolinks``` directive argument:</br>
-> **Note that text inside of your tag (\<p> in current example) is ignored.**
+## Usage examples
+dolinks assumes that you'll pass your text to the template using the [Vue "Mustache" syntax](https://v2.vuejs.org/v2/guide/syntax.html#Text).
+  1. Mark you HTML tag with ```v-dolinks``` directive:</br>
+  2. Pass text using ```{{ yourText }}```
+
+### Preserve your \n symbols:
 #### Input:
-```html
-<p v-dolinks="'Some text description in <p>inside_text</p> tag and some https://achievki.io link'">My tag text</p>
+```javascript
+<template>
+  <p v-dolinks :style="{'white-space': 'pre-wrap'}">
+    {{ yourText }}
+  </p>
+</template>
+
+<script>
+  data() {
+    return {
+      yourText: 'Some \n splited \n https://achievki.io \n here'
+    }
+  }
+</script>
 ```
 #### Output: 
 ```html
-<p>
-  Some text description in <p>inside_text</p> tag and some
-  <a href="https://achievki.io" target="_blank">https://achievki.io</a>
- link
+<p style="white-space: pre-wrap;">
+  "Some splited"
+  <a href="https://achievki.io" target="_blank">https://achievki.io</a> 
+ " here"
+</p>
+```
+
+### Sanitizes all other HTML tags:
+#### Input:
+```javascript
+<script>
+  data() {
+    return {
+      yourText: 'https://example.com Let`s try to pass some <script> with <a href="https://google.com">GOOGLE LINK</a> <\/script>'
+    }
+  }
+</script>
+```
+#### Output: 
+```html
+<p style="white-space: pre-wrap;">
+  <a href="https://example.com" target="_blank">https://example.com</a>
+  " Let`s try to pass some &lt;script&gt; with &lt;a href=""
+  <a href="https://google.com" target="_blank">https://google.com</a>
+  ""&gt;GOOGLE LINK&lt;/a&gt; &lt;/script&gt;
 </p>
 ```
 
@@ -55,7 +96,7 @@ Text, matched this regex, also will be used as a value for **href** atribute.
 
 **Default:**
 ```javascript
-/^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/
+/https?:\/\/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9@:%._\+~#=\/]{0,2048}/
 ```
 
 ### target
