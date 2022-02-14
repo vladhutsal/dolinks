@@ -1,39 +1,9 @@
 import { VNode } from 'vue';
-
-// TYPES
-export type Ttarget = '_self' | '_blank' | '_parent' | '_top';
-
-export interface IOptions {
-  urlRegEx?: RegExp;
-  target?: Ttarget;
-  disableWarnings?: boolean;
-};
-
-interface IDefaultOptions {
-  urlRegEx: RegExp;
-  target: Ttarget;
-  disableWarnings: boolean;
-}
+import { IOptions, ITextExists, IUserOptions } from './intrefaces';
+import { defaultWarnings, defaultTarget, defaultUrlRegExp } from './env';
 
 
-// DEFAULTS
-export const validHTMLtagRegExp = /<(“[^”]*”|'[^’]*’|[^'”>])*>/
-
-const defaultWarnings = false;
-const defaultTarget = '_blank';
-
-
-const defaultUrlRegExp = new RegExp([
-  '^(https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.',
-  '[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.',
-  '[^\\s]{2,}|https?:\/\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.',
-  '[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})$'
-  ].join('')
-);
-
-
-// HELPERS
-export function defineOptions(options: IOptions): IDefaultOptions {
+export function defineOptions(options: IUserOptions): IOptions {
   const urlRegEx = options.urlRegEx ? options.urlRegEx : defaultUrlRegExp;
   const target = options.target ? options.target : defaultTarget;
   const disableWarnings = options.disableWarnings ? options.disableWarnings : defaultWarnings;
@@ -41,36 +11,56 @@ export function defineOptions(options: IOptions): IDefaultOptions {
 };
 
 
-export function updateLinkedPhrase(nEnd: number, linkedPhrase: string, newText: string): string {
-  if (nEnd > 0) {
-    return linkedPhrase + newText + '\n';
-  }
-  return linkedPhrase + newText;
+export function compileLinkTag(link: string, target: string): string {
+  return `<a href="${link}" target="${target}">${link}</a>`
 }
 
 
 export function sanitizeHTMLTags(text: string): string {
-  const letterArr = Array.from(text);
-  const replaced = letterArr.map((letter) => {
-    return letter === '<' ? '&lt;' : letter;
-  });
-  return replaced.join('');
+  return text.replace(/</g, '&lt;');
 }
 
 
-export function handleConsoleWarnings(vnode: VNode, argText: string | undefined, disableWarnings: boolean): boolean {
-  if (disableWarnings) {
-    return false;
-  }
-  let stopExec = false;
-  if (!argText) {
+export function handleWarningsAndErrors(
+  vnode: VNode,
+  options: IOptions,
+  textExists: ITextExists,
+) {
+  // ignoring disableWarnings feature, due to deprecated mode v-dolinks="'text'"
+  if (textExists.arg) {
     console.error(
-      `v-dolinks: seems like v-dolinks directive argument is empty (inside of <${vnode.tag}> tag).`,
-      'Pass text directly to v-dolniks as argument: v-dolinks="\'Your text here\'"');
-      stopExec = true;
+      `v-dolinks [DEPRECATED use case: v-dolinks="'your text'"] (in <${vnode.tag}> tag):`,
+      'move text from v-dolinks arg to inner tag text:',
+      '<p v-dolinks>"{{ yourTextAsValue }}"</p>',
+    );
   }
-  if (vnode.children && vnode.children[0].text) {
-    console.warn(`v-dolinks: text inside of <${vnode.tag}> is ignored`);
+
+  if (options.disableWarnings) return;
+
+  if (!textExists.inner) {
+    console.warn(
+      `v-dolinks (in <${vnode.tag}> tag):`,
+      'element uses dolinks directive but has no text;',
+    );
   }
-  return stopExec;
+}
+
+
+export function getInnerText(
+  textExists: ITextExists,
+  inner: string,
+  arg: string
+): string | string {
+  if (textExists.arg) return arg;
+  return inner;
+}
+
+
+export function getTextExistence(inner: string, arg: string): ITextExists {
+  const isInnerText = (inner.length > 0);
+  const isArgText = (arg.length > 0);
+  return {
+    'inner': isInnerText,
+    'arg': isArgText,
+  }
 }
